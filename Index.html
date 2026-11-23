@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Кирилл (@deloro) — Bio</title>
+  <meta name="description" content="Персональная био-визитка Кирилла (deloro) для QR-кода на рюкзаке." />
+  <meta name="theme-color" content="#F6F6F4" />
+
+  <!-- Tailwind CSS для адаптивной сетки и утилитарных стилей -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Шрифты Manrope (кириллица, геометрический гротеск) и JetBrains Mono (метки, бейджи, строка) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* ==========================================================================
+       1. ДИЗАЙН-ТОКЕНЫ (SWISS / ARCHITECTURAL LIGHT BENTO)
+       ========================================================================== */
+    :root {
+      --bg-canvas: #F6F6F4;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #F1F1EE;
+      --ink-primary: #111111;
+      --ink-secondary: #68686E;
+      --ink-muted: #9A9AA1;
+      --border-hairline: rgba(17, 17, 17, 0.08);
+      --border-hover: rgba(17, 17, 17, 0.16);
+      --status-green: #16A34A;
+
+      --shadow-card: 0 1px 2px rgba(17, 17, 17, 0.03), 0 8px 24px -14px rgba(17, 17, 17, 0.08);
+      --shadow-card-hover: 0 4px 12px -4px rgba(17, 17, 17, 0.06), 0 14px 30px -16px rgba(17, 17, 17, 0.12);
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      background-color: var(--bg-canvas);
+      color: var(--ink-primary);
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      background-color: var(--bg-canvas);
+      /* Деликатная архитектурная точечная сетка на фоне */
+      background-image: radial-gradient(rgba(17, 17, 17, 0.09) 1px, transparent 1px);
+      background-size: 18px 18px;
+      background-position: center top;
+      color: var(--ink-primary);
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    .font-mono-tech {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+
+    /* ==========================================================================
+       2. КАСКАДНОЕ ПОЯВЛЕНИЕ КАРТОЧЕК ПРИ ЗАГРУЗКЕ
+       ========================================================================== */
+    .stagger-item {
+      opacity: 0;
+      transform: translateY(14px);
+      animation: fadeSlideUp 0.65s var(--ease-out-expo) forwards;
+      animation-delay: calc(var(--order, 0) * 60ms);
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ==========================================================================
+       3. БАЗОВЫЕ BENTO-КАРТОЧКИ И ТАКТИЛЬНОСТЬ
+       ========================================================================== */
+    .bento-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-hairline);
+      box-shadow: var(--shadow-card);
+      transition:
+        transform 0.22s var(--ease-out-expo),
+        border-color 0.22s ease,
+        box-shadow 0.26s var(--ease-out-expo),
+        background-color 0.22s ease,
+        color 0.22s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .bento-interactive:hover {
+        border-color: var(--border-hover);
+        box-shadow: var(--shadow-card-hover);
+        transform: translateY(-1.5px);
+      }
+    }
+
+    .tactile {
+      transition:
+        transform 0.18s var(--ease-out-expo),
+        background-color 0.22s ease,
+        border-color 0.22s ease,
+        color 0.22s ease,
+        box-shadow 0.24s var(--ease-out-expo);
+    }
+
+    .tactile:active {
+      transform: scale(0.975);
+    }
+
+    /* ==========================================================================
+       4. ПУЛЬСИРУЮЩИЙ ИНДИКАТОР СТАТУСА
+       ========================================================================== */
+    .pulse-dot {
+      position: relative;
+      width: 7px;
+      height: 7px;
+      border-radius: 9999px;
+      background-color: var(--status-green);
+      flex-shrink: 0;
+    }
+
+    .pulse-dot::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background-color: var(--status-green);
+      opacity: 0.45;
+      animation: statusPulse 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes statusPulse {
+      0%, 100% {
+        transform: scale(0.85);
+        opacity: 0.45;
+      }
+      55% {
+        transform: scale(1.85);
+        opacity: 0;
+      }
+    }
+
+    /* ==========================================================================
+       5. МОНОГРАММА АВАТАРА С 3D-НАКЛОНОМ И ДЕЛИКАТНЫМ БЛИКОМ
+       ========================================================================== */
+    .monogram-tile {
+      position: relative;
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background-color: var(--ink-primary);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px -12px rgba(17, 17, 17, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      transform: perspective(360px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+      transition: transform 0.25s var(--ease-out-expo), box-shadow 0.25s ease;
+      user-select: none;
+    }
+
+    /* Деликатная архитектурная рамка внутри монограммы */
+    .monogram-tile::before {
+      content: "";
+      position: absolute;
+      inset: 5px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      pointer-events: none;
+    }
+
+    /* Тонкий скользящий светлый блик при наведении */
+    .monogram-shine {
+      position: absolute;
+      inset: -40%;
+      background: linear-gradient(
+        120deg,
+        transparent 38%,
+        rgba(255, 255, 255, 0.16) 50%,
+        transparent 62%
+      );
+      transform: translateX(-110%);
+      transition: transform 0.65s var(--ease-out-expo);
+      pointer-events: none;
+    }
+
+    .monogram-tile:hover .monogram-shine,
+    .monogram-tile.is-shining .monogram-shine {
+      transform: translateX(110%);
+    }
+
+    /* ==========================================================================
+       6. БЕСШОВНАЯ БЕСКОНЕЧНАЯ БЕГУЩАЯ СТРОКА (MARQUEE)
+       ========================================================================== */
+    .marquee-viewport {
+      overflow: hidden;
+      position: relative;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+      animation: marqueeScroll 22s linear infinite;
+    }
+
+    .marquee-viewport:hover .marquee-track,
+    .marquee-viewport.is-paused .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeScroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    /* ==========================================================================
+       7. ПЛАВНОЕ РАСКРЫТИЕ ПАНЕЛЕЙ (GRID-TEMPLATE-ROWS 60FPS)
+       ========================================================================== */
+    .collapse-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows 0.34s var(--ease-out-expo),
+        opacity 0.24s ease;
+    }
+
+    .collapse-panel.is-open {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+
+    .collapse-panel > div {
+      overflow: hidden;
+    }
+
+    .fade-swap {
+      transition: opacity 0.16s ease, transform 0.16s ease;
+    }
+
+    .fade-swap.is-swapping {
+      opacity: 0;
+      transform: translateY(3px);
+    }
+
+    /* ==========================================================================
+       8. БЛОК «КТО ТЫ МНЕ?» — КНОПКИ ВЫБОРА
+       ========================================================================== */
+    .role-option {
+      background-color: var(--bg-canvas);
+      border: 1px solid var(--border-hairline);
+      color: var(--ink-primary);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .role-option:hover:not(.is-selected) {
+        background-color: #EFEFEB;
+        border-color: var(--border-hover);
+      }
+    }
+
+    .role-option.is-selected {
+      background-color: var(--ink-primary);
+      border-color: var(--ink-primary);
+      color: #FFFFFF;
+      box-shadow: 0 10px 22px -12px rgba(17, 17, 17, 0.42);
+    }
+
+    .role-option .role-emoji {
+      display: inline-block;
+      transition: transform 0.34s var(--ease-spring);
+    }
+
+    .role-option.is-selected .role-emoji {
+      transform: scale(1.14);
+    }
+
+    /* ==========================================================================
+       9. АККОРДЕОН «ЧЕМ ЗАНИМАЮСЬ»
+       ========================================================================== */
+    .accordion-item.is-open {
+      border-color: rgba(17, 17, 17, 0.18);
+      box-shadow: var(--shadow-card-hover);
+    }
+
+    .accordion-plus {
+      transition:
+        transform 0.32s var(--ease-out-expo),
+        background-color 0.22s ease,
+        color 0.22s ease;
+    }
+
+    .accordion-item.is-open .accordion-plus {
+      transform: rotate(45deg);
+      background-color: var(--ink-primary);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       10. СОЦСЕТИ (TELEGRAM CTA + 2+1 BENTO-СЕТКА)
+       ========================================================================== */
+    .tg-primary-card {
+      background-color: var(--ink-primary);
+      border: 1px solid var(--ink-primary);
+      color: #FFFFFF;
+      box-shadow: 0 12px 26px -14px rgba(17, 17, 17, 0.45);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .tg-primary-card:hover {
+        background-color: #1A1A1D;
+        box-shadow: 0 16px 32px -14px rgba(17, 17, 17, 0.55);
+        transform: translateY(-1.5px);
+      }
+    }
+
+    .arrow-shift {
+      transition: transform 0.28s var(--ease-out-expo);
+    }
+
+    .group:hover .arrow-shift,
+    .group:active .arrow-shift {
+      transform: translate(2.5px, -2.5px);
+    }
+
+    /* ==========================================================================
+       11. КНОПКА «КИНУТЬ РЕСПЕКТ» И ВСПЛЫВАЮЩИЕ ЧАСТИЦЫ +1
+       ========================================================================== */
+    .respect-btn {
+      background-color: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      backdrop-filter: blur(6px);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .respect-btn:hover {
+        background-color: #FFFFFF;
+        border-color: rgba(17, 17, 17, 0.24);
+      }
+    }
+
+    .respect-badge {
+      transition:
+        transform 0.36s var(--ease-spring),
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .respect-btn.is-bouncing .respect-badge {
+      background-color: var(--ink-primary);
+      border-color: var(--ink-primary);
+      color: #FFFFFF;
+      transform: scale(1.12);
+    }
+
+    .float-plus-one {
+      position: fixed;
+      pointer-events: none;
+      z-index: 95;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ink-primary);
+      user-select: none;
+      will-change: transform, opacity;
+    }
+
+    /* ==========================================================================
+       12. ПЛАВАЮЩИЙ TOAST
+       ========================================================================== */
+    .toast-pill {
+      position: fixed;
+      left: 50%;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      transform: translate(-50%, 24px) scale(0.94);
+      background-color: var(--ink-primary);
+      color: #FFFFFF;
+      padding: 10px 16px;
+      border-radius: 9999px;
+      box-shadow: 0 14px 32px -10px rgba(17, 17, 17, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      max-width: calc(100vw - 32px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition:
+        opacity 0.25s var(--ease-out-expo),
+        transform 0.34s var(--ease-out-expo);
+    }
+
+    .toast-pill.is-visible {
+      opacity: 1;
+      transform: translate(-50%, 0) scale(1);
+    }
+
+    /* Снижение анимаций для пользователей с prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      .stagger-item {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+      .marquee-track,
+      .pulse-dot::after {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body class="selection:bg-[#111111] selection:text-white">
+  <!-- Основной центрированный mobile-first контейнер (max-w 440px) -->
+  <main class="w-full max-w-[440px] mx-auto px-4 pt-5 pb-12 flex flex-col gap-3">
+
+    <!-- ======================================================================
+         1. ВЕРХНЯЯ ИНТЕРАКТИВНАЯ СТАТУСНАЯ СТРОКА
+         ====================================================================== -->
+    <header class="stagger-item flex items-center justify-between gap-2" style="--order: 0;">
+      <button
+        type="button"
+        id="statusPillBtn"
+        class="bento-card tactile inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-mono-tech font-medium tracking-[0.04em] text-[#111111] hover:border-[#111111]/20 cursor-pointer"
+        aria-label="Статус QR-кода на рюкзаке"
+      >
+        <span class="pulse-dot" aria-hidden="true"></span>
+        <span>QR-СКАН С РЮКЗАКА</span>
+      </button>
+
+      <div
+        class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/80 border border-[#111111]/[0.07] font-mono-tech text-[10.5px] font-medium tracking-[0.05em] text-[#68686E] select-none"
+        aria-label="Текущий статус и время"
+      >
+        <span id="liveClock">--:--</span>
+        <span class="text-[#111111]/25" aria-hidden="true">·</span>
+        <span class="text-[#111111]">ONLINE</span>
+      </div>
+    </header>
+
+    <!-- ======================================================================
+         2. HERO BENTO-КАРТОЧКА ПРОФИЛЯ
+         ====================================================================== -->
+    <section class="stagger-item bento-card rounded-[24px] p-5 flex flex-col gap-4" style="--order: 1;" aria-label="Профиль Кирилла">
+      <div class="flex items-center gap-4">
+        <!-- Тёмная геометрическая монограмма «К» с наклоном и бликом -->
+        <div
+          id="monogramAvatar"
+          class="monogram-tile cursor-pointer"
+          role="img"
+          aria-label="Монограмма К"
+        >
+          <span class="monogram-shine" aria-hidden="true"></span>
+          <span class="relative z-10 text-[30px] font-extrabold leading-none tracking-[-0.04em]">К</span>
+        </div>
+
+        <div class="min-w-0 flex flex-col items-start gap-2">
+          <h1 class="text-[28px] font-extrabold leading-none tracking-[-0.035em] text-[#111111]">
+            Кирилл
+          </h1>
+
+          <!-- Кликабельный ник @deloro с копированием 'deloro' -->
+          <button
+            type="button"
+            id="copyNickBtn"
+            data-copy="deloro"
+            title="Скопировать ник deloro"
+            class="tactile inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F1F1EE] hover:bg-[#E7E7E2] border border-[#111111]/[0.06] text-[#111111] font-mono-tech text-[12px] font-medium cursor-pointer"
+          >
+            <span>@deloro</span>
+            <svg class="w-3.5 h-3.5 text-[#68686E]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="11" height="11" rx="2.2" />
+              <path d="M5 15H4.2A2.2 2.2 0 0 1 2 12.8V4.2A2.2 2.2 0 0 1 4.2 2h8.6A2.2 2.2 0 0 1 15 4.2V5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Мини-бейджи: возраст и класс -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F6F6F4] border border-[#111111]/[0.08] text-[12.5px] font-semibold text-[#111111]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#111111]/30" aria-hidden="true"></span>
+          <span>14 лет</span>
+        </span>
+        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#F6F6F4] border border-[#111111]/[0.08] text-[12.5px] font-semibold text-[#111111]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#111111]/30" aria-hidden="true"></span>
+          <span>8 М класс</span>
+        </span>
+      </div>
+
+      <!-- Короткое естественное описание -->
+      <p class="pt-3.5 border-t border-[#111111]/[0.07] text-[14.5px] leading-[1.6] text-[#68686E] font-medium">
+        Собираю веб-проекты с нейросетями и катаю в игры. Если поймал этот QR на ходу — все ссылки и контакты ниже.
+      </p>
+    </section>
+
+    <!-- ======================================================================
+         3. БЕСШОВНАЯ БЕГУЩАЯ СТРОКА ВНУТРИ BENTO-КАРТОЧКИ
+         ====================================================================== -->
+    <div
+      id="marqueeCard"
+      class="stagger-item bento-card rounded-[16px] py-2.5 px-1 select-none"
+      style="--order: 2;"
+      aria-label="Интересы: Вайбкод, Claude, Gemini, CS2, Kirill"
+    >
+      <div id="marqueeViewport" class="marquee-viewport">
+        <div class="marquee-track">
+          <!-- Половина 1 (дважды повторяем для гарантированного заполнения ширины без разрывов) -->
+          <div class="flex items-center shrink-0 font-mono-tech text-[11px] font-medium tracking-[0.11em] uppercase text-[#68686E]">
+            <span class="px-2">ВАЙБКОД</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CLAUDE</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">GEMINI</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CS2</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2 text-[#111111]">KIRILL</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">ВАЙБКОД</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CLAUDE</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">GEMINI</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CS2</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2 text-[#111111]">KIRILL</span><span class="text-[#111111]/30">*</span>
+          </div>
+          <!-- Половина 2 (точная копия для бесшовного цикла -50%) -->
+          <div class="flex items-center shrink-0 font-mono-tech text-[11px] font-medium tracking-[0.11em] uppercase text-[#68686E]" aria-hidden="true">
+            <span class="px-2">ВАЙБКОД</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CLAUDE</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">GEMINI</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CS2</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2 text-[#111111]">KIRILL</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">ВАЙБКОД</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CLAUDE</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">GEMINI</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2">CS2</span><span class="text-[#111111]/30">*</span>
+            <span class="px-2 text-[#111111]">KIRILL</span><span class="text-[#111111]/30">*</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         4. ИНТЕРАКТИВНАЯ КАРТОЧКА «КТО ТЫ МНЕ?»
+         ====================================================================== -->
+    <section class="stagger-item bento-card rounded-[24px] p-4 sm:p-5 flex flex-col" style="--order: 3;" aria-label="Кто ты мне?">
+      <div class="flex items-center justify-between gap-2 mb-3 px-0.5">
+        <h2 class="font-mono-tech text-[11px] font-semibold uppercase tracking-[0.08em] text-[#68686E]">
+          КТО ТЫ МНЕ?
+        </h2>
+        <span id="roleStatusLabel" class="font-mono-tech text-[10px] uppercase tracking-[0.06em] text-[#9A9AA1]">
+          ВЫБЕРИ
+        </span>
+      </div>
+
+      <!-- 3 равноширинные кнопки с эмодзи -->
+      <div class="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Кто ты мне?">
+        <button
+          type="button"
+          class="role-option tactile rounded-[16px] py-3 px-2 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer"
+          data-role="friend"
+          role="radio"
+          aria-checked="false"
+        >
+          <span class="role-emoji text-[21px] leading-none" aria-hidden="true">🤝</span>
+          <span class="text-[12px] font-semibold leading-tight">Друг</span>
+        </button>
+
+        <button
+          type="button"
+          class="role-option tactile rounded-[16px] py-3 px-2 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer"
+          data-role="acquaintance"
+          role="radio"
+          aria-checked="false"
+        >
+          <span class="role-emoji text-[21px] leading-none" aria-hidden="true">👋</span>
+          <span class="text-[12px] font-semibold leading-tight">Знакомый</span>
+        </button>
+
+        <button
+          type="button"
+          class="role-option tactile rounded-[16px] py-3 px-1.5 flex flex-col items-center justify-center gap-1.5 text-center cursor-pointer"
+          data-role="qr"
+          role="radio"
+          aria-checked="false"
+        >
+          <span class="role-emoji text-[21px] leading-none" aria-hidden="true">🎒</span>
+          <span class="text-[12px] font-semibold leading-tight">Кликнул на QR</span>
+        </button>
+      </div>
+
+      <!-- Плавно раскрывающийся ответ -->
+      <div id="roleAnswerPanel" class="collapse-panel" aria-live="polite">
+        <div>
+          <div class="mt-3 p-3.5 rounded-[16px] bg-[#F6F6F4] border border-[#111111]/[0.07] flex items-start gap-2.5">
+            <span id="roleAnswerEmoji" class="text-[16px] leading-snug shrink-0" aria-hidden="true"></span>
+            <p id="roleAnswerText" class="fade-swap text-[13.5px] leading-[1.55] font-medium text-[#111111]"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         5. СЕКЦИЯ «ЧЕМ ЗАНИМАЮСЬ» (РОВНО 2 РАСКРЫВАЮЩИЕСЯ КАРТОЧКИ-АККОРДЕОНА)
+         ====================================================================== -->
+    <section class="stagger-item flex flex-col gap-2 pt-1" style="--order: 4;" aria-label="Чем занимаюсь">
+      <div class="flex items-center justify-between px-1">
+        <h2 class="font-mono-tech text-[11px] font-semibold uppercase tracking-[0.08em] text-[#68686E]">
+          ЧЕМ ЗАНИМАЮСЬ
+        </h2>
+        <span class="font-mono-tech text-[10px] uppercase tracking-[0.06em] text-[#9A9AA1]">
+          2 НАПРАВЛЕНИЯ
+        </span>
+      </div>
+
+      <!-- Аккордеон 1: Код и веб -->
+      <div class="bento-card accordion-item rounded-[20px] overflow-hidden" data-accordion="web">
+        <button
+          type="button"
+          class="accordion-trigger tactile w-full p-4 flex items-center justify-between gap-3 text-left cursor-pointer"
+          aria-expanded="false"
+          aria-controls="panel-web"
+        >
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="w-9 h-9 rounded-[12px] bg-[#F1F1EE] text-[#111111] flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 9l-3.5 3L8 15" />
+                <path d="M16 9l3.5 3-3.5 3" />
+                <path d="M13.5 6.5l-3 11" />
+              </svg>
+            </span>
+            <div class="flex items-center flex-wrap gap-2 min-w-0">
+              <span class="text-[15px] font-bold tracking-[-0.015em] text-[#111111]">Код и веб</span>
+              <span class="px-2 py-0.5 rounded-md bg-[#F6F6F4] border border-[#111111]/[0.07] font-mono-tech text-[10px] font-medium tracking-[0.05em] text-[#68686E]">
+                AI / WEB
+              </span>
+            </div>
+          </div>
+
+          <span class="accordion-plus w-7 h-7 rounded-full bg-[#F1F1EE] text-[#111111] flex items-center justify-center shrink-0" aria-hidden="true">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+        </button>
+
+        <div id="panel-web" class="collapse-panel">
+          <div>
+            <div class="px-4 pb-4 pt-0.5">
+              <p class="pt-3 border-t border-[#111111]/[0.06] text-[13.5px] leading-[1.6] text-[#68686E] font-medium">
+                Делаю сайты и интерактивные штуки через вайбкод, экспериментирую с Claude, Gemini и чистым вебом.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Аккордеон 2: Игры -->
+      <div class="bento-card accordion-item rounded-[20px] overflow-hidden" data-accordion="games">
+        <button
+          type="button"
+          class="accordion-trigger tactile w-full p-4 flex items-center justify-between gap-3 text-left cursor-pointer"
+          aria-expanded="false"
+          aria-controls="panel-games"
+        >
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="w-9 h-9 rounded-[12px] bg-[#F1F1EE] text-[#111111] flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2.5" y="6.5" width="19" height="11" rx="5.5" />
+                <path d="M7.5 10v4M5.5 12h4" />
+                <circle cx="15.5" cy="11" r="0.85" fill="currentColor" stroke="none" />
+                <circle cx="17.5" cy="13" r="0.85" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <div class="flex items-center flex-wrap gap-2 min-w-0">
+              <span class="text-[15px] font-bold tracking-[-0.015em] text-[#111111]">Игры</span>
+              <span class="px-2 py-0.5 rounded-md bg-[#F6F6F4] border border-[#111111]/[0.07] font-mono-tech text-[10px] font-medium tracking-[0.05em] text-[#68686E]">
+                CS2
+              </span>
+            </div>
+          </div>
+
+          <span class="accordion-plus w-7 h-7 rounded-full bg-[#F1F1EE] text-[#111111] flex items-center justify-center shrink-0" aria-hidden="true">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+        </button>
+
+        <div id="panel-games" class="collapse-panel">
+          <div>
+            <div class="px-4 pb-4 pt-0.5">
+              <p class="pt-3 border-t border-[#111111]/[0.06] text-[13.5px] leading-[1.6] text-[#68686E] font-medium">
+                В свободное время чаще всего захожу в Counter-Strike 2. Ссылка на мой Steam чуть ниже — добавляйся.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         6. СОЦСЕТИ И СВЯЗЬ (ГЛАВНАЯ TELEGRAM + РОВНО 3 БЛОКА 2+1: TIKTOK, DISCORD, STEAM)
+         ====================================================================== -->
+    <section class="stagger-item flex flex-col gap-2.5 pt-1" style="--order: 5;" aria-label="Соцсети и связь">
+      <div class="flex items-center justify-between px-1">
+        <h2 class="font-mono-tech text-[11px] font-semibold uppercase tracking-[0.08em] text-[#68686E]">
+          СОЦСЕТИ И СВЯЗЬ
+        </h2>
+        <span class="font-mono-tech text-[10px] uppercase tracking-[0.06em] text-[#9A9AA1]">
+          НА СВЯЗИ
+        </span>
+      </div>
+
+      <!-- Главная акцентная чёрная карточка: Telegram -->
+      <a
+        href="https://t.me/deloro1337"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="tg-primary-card tactile group rounded-[22px] p-4 sm:px-5 flex items-center justify-between gap-3"
+      >
+        <div class="flex items-center gap-3.5 min-w-0">
+          <span class="w-10 h-10 rounded-[13px] bg-white/10 border border-white/10 flex items-center justify-center shrink-0" aria-hidden="true">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.2 4.6L2.7 11.7c-.8.3-.8 1.4 0 1.7l4.6 1.6 1.7 5.2c.2.7 1.1.9 1.6.4l2.7-2.6 4.7 3.4c.7.5 1.7.1 1.9-.7l2.4-14.8c.2-.9-.6-1.6-1.1-1.3z" />
+              <path d="M7.3 15l10.8-6.7" />
+            </svg>
+          </span>
+          <div class="min-w-0">
+            <div class="text-[16px] font-bold leading-tight tracking-[-0.015em] text-white">
+              Telegram
+            </div>
+            <div class="font-mono-tech text-[12px] text-white/65 truncate mt-0.5">
+              @deloro1337
+            </div>
+          </div>
+        </div>
+
+        <span class="w-9 h-9 rounded-full border border-white/15 group-hover:border-white/30 group-hover:bg-white/10 flex items-center justify-center shrink-0 transition-colors" aria-hidden="true">
+          <svg class="w-4 h-4 text-white arrow-shift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7" />
+            <path d="M9 7h8v8" />
+          </svg>
+        </span>
+      </a>
+
+      <!-- Сбалансированная 2+1 Bento-сетка (ровно 3 блока: TikTok, Discord, Steam) -->
+      <div class="grid grid-cols-2 gap-2.5">
+        <!-- Блок 1 (верхний левый): TikTok -->
+        <a
+          href="https://www.tiktok.com/@d333lo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bento-card bento-interactive tactile group rounded-[20px] p-4 flex flex-col justify-between gap-4 min-h-[106px]"
+        >
+          <div class="flex items-center justify-between w-full">
+            <span class="w-9 h-9 rounded-[11px] bg-[#F1F1EE] text-[#111111] flex items-center justify-center" aria-hidden="true">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 4v11.2a3.6 3.6 0 1 1-2.6-3.45" />
+                <path d="M14 4c.9 2.4 2.8 4.1 5.2 4.3" />
+              </svg>
+            </span>
+            <span class="text-[#9A9AA1] group-hover:text-[#111111] transition-colors" aria-hidden="true">
+              <svg class="w-4 h-4 arrow-shift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 17L17 7M9 7h8v8" />
+              </svg>
+            </span>
+          </div>
+
+          <div class="min-w-0">
+            <div class="text-[15px] font-bold leading-tight text-[#111111]">TikTok</div>
+            <div class="font-mono-tech text-[11.5px] text-[#68686E] truncate mt-0.5">@d333lo</div>
+          </div>
+        </a>
+
+        <!-- Блок 2 (верхний правый): Discord (копирует deloro1337 по клику) -->
+        <button
+          type="button"
+          id="copyDiscordBtn"
+          data-copy="deloro1337"
+          title="Скопировать Discord deloro1337"
+          class="bento-card bento-interactive tactile group rounded-[20px] p-4 text-left flex flex-col justify-between gap-4 min-h-[106px] cursor-pointer"
+        >
+          <div class="flex items-center justify-between w-full">
+            <span class="w-9 h-9 rounded-[11px] bg-[#F1F1EE] text-[#111111] flex items-center justify-center" aria-hidden="true">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8.5 7.2c2.2-.7 4.8-.7 7 0l1.6 1.2c1.2 2.4 1.6 5.2 1.2 8.1-1.4 1.1-3 1.8-4.7 2.1l-.9-1.5" />
+                <path d="M8.5 7.2L6.9 8.4c-1.2 2.4-1.6 5.2-1.2 8.1 1.4 1.1 3 1.8 4.7 2.1l.9-1.5" />
+                <path d="M9.5 16.4c1.6.4 3.4.4 5 0" />
+                <circle cx="9.6" cy="12.8" r="0.95" fill="currentColor" stroke="none" />
+                <circle cx="14.4" cy="12.8" r="0.95" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F6F6F4] border border-[#111111]/[0.06] text-[#68686E] group-hover:text-[#111111] transition-colors" aria-hidden="true">
+              <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="11" height="11" rx="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <span class="font-mono-tech text-[9.5px] uppercase tracking-[0.04em]">COPY</span>
+            </span>
+          </div>
+
+          <div class="min-w-0 w-full">
+            <div class="text-[15px] font-bold leading-tight text-[#111111]">Discord</div>
+            <div class="font-mono-tech text-[11.5px] text-[#68686E] truncate mt-0.5">deloro1337</div>
+          </div>
+        </button>
+
+        <!-- Блок 3 (нижний на всю ширину): Steam -->
+        <a
+          href="https://steamcommunity.com/profiles/76561198310322969/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="col-span-2 bento-card bento-interactive tactile group rounded-[20px] p-4 flex items-center justify-between gap-3"
+        >
+          <div class="flex items-center gap-3.5 min-w-0">
+            <span class="w-10 h-10 rounded-[12px] bg-[#F1F1EE] text-[#111111] flex items-center justify-center shrink-0" aria-hidden="true">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9.2" />
+                <circle cx="14.8" cy="9.5" r="2.2" />
+                <circle cx="9.2" cy="14.9" r="1.55" />
+                <path d="M13 11l-2.4 2.6" />
+                <path d="M3.1 13.7l4.6 1" />
+              </svg>
+            </span>
+            <div class="min-w-0">
+              <div class="text-[15px] font-bold leading-tight text-[#111111]">Steam</div>
+              <div class="text-[12.5px] font-medium text-[#68686E] truncate mt-0.5">
+                Профиль Steam · Добавить в друзья
+              </div>
+            </div>
+          </div>
+
+          <span class="w-8 h-8 rounded-full bg-[#F6F6F4] border border-[#111111]/[0.07] text-[#68686E] group-hover:text-[#111111] group-hover:border-[#111111]/20 flex items-center justify-center shrink-0 transition-colors" aria-hidden="true">
+            <svg class="w-4 h-4 arrow-shift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M9 7h8v8" />
+            </svg>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         7. ФУТЕР И ИНТЕРАКТИВНАЯ КНОПКА «КИНУТЬ РЕСПЕКТ»
+         ====================================================================== -->
+    <footer class="stagger-item pt-1.5 flex flex-col gap-4" style="--order: 6;">
+      <button
+        type="button"
+        id="respectBtn"
+        class="respect-btn tactile w-full rounded-[20px] p-4 flex items-center justify-between gap-3 text-left cursor-pointer"
+        aria-label="Кинуть респект Кириллу"
+      >
+        <div class="flex flex-col gap-0.5 min-w-0">
+          <span class="text-[15px] font-bold text-[#111111] leading-tight">Кинуть респект</span>
+          <span id="respectHint" class="text-[12.5px] font-medium text-[#68686E]">
+            Отметься, если заглянул по QR
+          </span>
+        </div>
+
+        <span
+          id="respectBadge"
+          class="respect-badge inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white border border-[#111111]/[0.12] font-mono-tech text-[13.5px] font-semibold text-[#111111] shrink-0"
+        >
+          <span aria-hidden="true">+</span>
+          <span id="respectCounter">1</span>
+        </span>
+      </button>
+
+      <div class="flex items-center justify-center gap-2 font-mono-tech text-[11px] font-medium tracking-[0.06em] text-[#9A9AA1] select-none">
+        <span>deloro · 8 М</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Плавающий Toast для уведомлений (копирование, пасхалки статуса) -->
+  <div
+    id="toastPill"
+    class="toast-pill inline-flex items-center gap-2 font-mono-tech text-[12px] font-medium"
+    role="status"
+    aria-live="polite"
+  >
+    <span class="w-1.5 h-1.5 rounded-full bg-[#16A34A] shrink-0" aria-hidden="true"></span>
+    <span id="toastText">Скопировано</span>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ======================================================================
+         1. ДАННЫЕ И КОНСТАНТЫ
+         ====================================================================== */
+      const STATUS_MESSAGES = [
+        'Ты догнал мой рюкзак 👀',
+        'Респект за любопытство',
+        'QR работает идеально'
+      ];
+
+      const ROLE_RESPONSES = {
+        friend: {
+          emoji: '🤝',
+          text: 'Свои люди на месте. Пиши в ТГ, когда пойдём катать или тестить новые идеи.'
+        },
+        acquaintance: {
+          emoji: '👋',
+          text: 'Салют! Не теряйся — все контакты ниже, закидывай в друзья.'
+        },
+        qr: {
+          emoji: '🎒',
+          text: 'О, не зря клеил на рюкзак! Уважаю за любопытство — заглядывай в соцсети или кидай респект ниже.'
+        }
+      };
+
+      const STORAGE_KEYS = {
+        role: 'deloro_bio_role_v1',
+        respect: 'deloro_bio_respect_v1'
+      };
+
+      /* ======================================================================
+         2. БЕЗОПАСНЫЙ LOCALSTORAGE (С ЗАЩИТОЙ ДЛЯ IFRAME / ПРИВАТНОГО РЕЖИМА)
+         ====================================================================== */
+      function readStorage(key) {
+        try {
+          return window.localStorage.getItem(key);
+        } catch (err) {
+          return null;
+        }
+      }
+
+      function writeStorage(key, value) {
+        try {
+          window.localStorage.setItem(key, value);
+        } catch (err) {
+          // Игнорируем, если localStorage ограничен политикой браузера
+        }
+      }
+
+      /* ======================================================================
+         3. TOAST-УВЕДОМЛЕНИЯ И НАДЁЖНОЕ КОПИРОВАНИЕ В БУФЕР ОБМЕНА
+         ====================================================================== */
+      const toastPill = document.getElementById('toastPill');
+      const toastText = document.getElementById('toastText');
+      let toastTimer = null;
+
+      function showToast(message) {
+        toastText.textContent = message;
+        toastPill.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastPill.classList.remove('is-visible');
+        }, 2400);
+      }
+
+      /**
+       * Копирует текст в буфер обмена с приоритетным использованием execCommand
+       * (гарантированно работает в iframe) и фоллбэком на Clipboard API.
+       */
+      function copyToClipboard(text, toastMessage) {
+        let copied = false;
+
+        try {
+          const tempInput = document.createElement('textarea');
+          tempInput.value = text;
+          tempInput.setAttribute('readonly', '');
+          tempInput.style.position = 'fixed';
+          tempInput.style.top = '-9999px';
+          tempInput.style.left = '-9999px';
+          tempInput.style.opacity = '0';
+          document.body.appendChild(tempInput);
+          tempInput.focus();
+          tempInput.select();
+          tempInput.setSelectionRange(0, text.length);
+          copied = document.execCommand('copy');
+          document.body.removeChild(tempInput);
+        } catch (err) {
+          copied = false;
+        }
+
+        if (copied) {
+          showToast(toastMessage);
+          return;
+        }
+
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(text).then(function () {
+            showToast(toastMessage);
+          }).catch(function () {
+            showToast(text);
+          });
+        } else {
+          showToast(text);
+        }
+      }
+
+      /* ======================================================================
+         4. ЖИВЫЕ ЧАСЫ И ЦИКЛИЧЕСКИЕ СООБЩЕНИЯ СТАТУСНОЙ ПЛАШКИ
+         ====================================================================== */
+      const liveClockEl = document.getElementById('liveClock');
+      function updateClock() {
+        try {
+          const now = new Date();
+          const hh = String(now.getHours()).padStart(2, '0');
+          const mm = String(now.getMinutes()).padStart(2, '0');
+          liveClockEl.textContent = hh + ':' + mm;
+        } catch (err) {
+          liveClockEl.textContent = '2026';
+        }
+      }
+      updateClock();
+      setInterval(updateClock, 15000);
+
+      const statusPillBtn = document.getElementById('statusPillBtn');
+      let statusIndex = 0;
+      statusPillBtn.addEventListener('click', function () {
+        showToast(STATUS_MESSAGES[statusIndex]);
+        statusIndex = (statusIndex + 1) % STATUS_MESSAGES.length;
+      });
+
+      /* ======================================================================
+         5. ИНТЕРАКТИВНЫЙ 3D-НАКЛОН И БЛИК МОНОГРАММЫ «К»
+         ====================================================================== */
+      const monogramEl = document.getElementById('monogramAvatar');
+      if (monogramEl) {
+        monogramEl.addEventListener('pointermove', function (e) {
+          if (e.pointerType !== 'mouse') return;
+          const rect = monogramEl.getBoundingClientRect();
+          const relX = (e.clientX - rect.left) / rect.width - 0.5;
+          const relY = (e.clientY - rect.top) / rect.height - 0.5;
+          monogramEl.style.setProperty('--ry', (relX * 16).toFixed(2) + 'deg');
+          monogramEl.style.setProperty('--rx', (-relY * 16).toFixed(2) + 'deg');
+        });
+
+        monogramEl.addEventListener('pointerleave', function () {
+          monogramEl.style.setProperty('--rx', '0deg');
+          monogramEl.style.setProperty('--ry', '0deg');
+        });
+
+        monogramEl.addEventListener('click', function () {
+          monogramEl.classList.remove('is-shining');
+          void monogramEl.offsetWidth;
+          monogramEl.classList.add('is-shining');
+          setTimeout(function () {
+            monogramEl.classList.remove('is-shining');
+          }, 680);
+        });
+      }
+
+      /* ======================================================================
+         6. КОПИРОВАНИЕ НИКА И DISCORD
+         ====================================================================== */
+      const copyNickBtn = document.getElementById('copyNickBtn');
+      copyNickBtn.addEventListener('click', function () {
+        copyToClipboard(this.dataset.copy, 'Ник deloro скопирован');
+      });
+
+      const copyDiscordBtn = document.getElementById('copyDiscordBtn');
+      copyDiscordBtn.addEventListener('click', function () {
+        copyToClipboard(this.dataset.copy, 'Discord deloro1337 скопирован');
+      });
+
+      /* ======================================================================
+         7. ПАУЗА БЕГУЩЕЙ СТРОКИ ПРИ КАСАНИИ НА МОБИЛЬНЫХ
+         ====================================================================== */
+      const marqueeViewport = document.getElementById('marqueeViewport');
+      if (marqueeViewport) {
+        marqueeViewport.addEventListener('touchstart', function () {
+          marqueeViewport.classList.add('is-paused');
+        }, { passive: true });
+
+        marqueeViewport.addEventListener('touchend', function () {
+          marqueeViewport.classList.remove('is-paused');
+        }, { passive: true });
+
+        marqueeViewport.addEventListener('touchcancel', function () {
+          marqueeViewport.classList.remove('is-paused');
+        }, { passive: true });
+      }
+
+      /* ======================================================================
+         8. БЛОК «КТО ТЫ МНЕ?» (СОХРАНЕНИЕ В LOCALSTORAGE + ПЛАВНЫЙ ОТВЕТ)
+         ====================================================================== */
+      const roleButtons = document.querySelectorAll('.role-option');
+      const roleAnswerPanel = document.getElementById('roleAnswerPanel');
+      const roleAnswerEmoji = document.getElementById('roleAnswerEmoji');
+      const roleAnswerText = document.getElementById('roleAnswerText');
+      const roleStatusLabel = document.getElementById('roleStatusLabel');
+      let currentRole = null;
+
+      function selectRole(roleKey, animate) {
+        const entry = ROLE_RESPONSES[roleKey];
+        if (!entry) return;
+
+        roleButtons.forEach(function (btn) {
+          const active = btn.dataset.role === roleKey;
+          btn.classList.toggle('is-selected', active);
+          btn.setAttribute('aria-checked', active ? 'true' : 'false');
+        });
+
+        roleStatusLabel.textContent = 'ОТМЕЧЕНО';
+
+        if (animate && currentRole !== null && currentRole !== roleKey) {
+          roleAnswerText.classList.add('is-swapping');
+          setTimeout(function () {
+            roleAnswerEmoji.textContent = entry.emoji;
+            roleAnswerText.textContent = entry.text;
+            roleAnswerText.classList.remove('is-swapping');
+          }, 130);
+        } else {
+          roleAnswerEmoji.textContent = entry.emoji;
+          roleAnswerText.textContent = entry.text;
+          roleAnswerPanel.classList.add('is-open');
+        }
+
+        currentRole = roleKey;
+        writeStorage(STORAGE_KEYS.role, roleKey);
+      }
+
+      roleButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          selectRole(btn.dataset.role, true);
+        });
+      });
+
+      const savedRole = readStorage(STORAGE_KEYS.role);
+      if (savedRole && ROLE_RESPONSES[savedRole]) {
+        selectRole(savedRole, false);
+      }
+
+      /* ======================================================================
+         9. АККОРДЕОНЫ «ЧЕМ ЗАНИМАЮСЬ»
+         ====================================================================== */
+      const accordionItems = document.querySelectorAll('.accordion-item');
+      accordionItems.forEach(function (item) {
+        const trigger = item.querySelector('.accordion-trigger');
+        const panel = item.querySelector('.collapse-panel');
+        if (!trigger || !panel) return;
+
+        trigger.addEventListener('click', function () {
+          const willOpen = !item.classList.contains('is-open');
+          item.classList.toggle('is-open', willOpen);
+          panel.classList.toggle('is-open', willOpen);
+          trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
+      });
+
+      /* ======================================================================
+         10. КНОПКА «КИНУТЬ РЕСПЕКТ» (СЧЁТЧИК В LOCALSTORAGE + ЧАСТИЦЫ +1)
+         ====================================================================== */
+      const respectBtn = document.getElementById('respectBtn');
+      const respectBadge = document.getElementById('respectBadge');
+      const respectCounter = document.getElementById('respectCounter');
+      const respectHint = document.getElementById('respectHint');
+
+      const INITIAL_RESPECT = 12;
+      let respectValue = INITIAL_RESPECT;
+      let tapStreak = 0;
+      let bounceTimer = null;
+
+      const savedRespect = readStorage(STORAGE_KEYS.respect);
+      if (savedRespect !== null) {
+        const parsed = parseInt(savedRespect, 10);
+        if (!isNaN(parsed) && parsed >= 0) {
+          respectValue = parsed;
+        }
+      }
+      respectCounter.textContent = String(respectValue);
+
+      /**
+       * Создаёт лёгкие всплывающие частицы «+1» от места клика или счётчика
+       */
+      function spawnPlusOneParticles(clientX, clientY) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          return;
+        }
+
+        const badgeRect = respectBadge.getBoundingClientRect();
+        const originX = (typeof clientX === 'number' && clientX > 0)
+          ? clientX
+          : badgeRect.left + badgeRect.width / 2;
+        const originY = (typeof clientY === 'number' && clientY > 0)
+          ? clientY
+          : badgeRect.top + badgeRect.height / 2;
+
+        const count = 3;
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement('span');
+          particle.className = 'float-plus-one';
+          particle.textContent = i === 0 ? '+1' : (i === 1 ? '✦' : '+1');
+          particle.style.left = originX + 'px';
+          particle.style.top = originY + 'px';
+          if (i === 1) {
+            particle.style.fontSize = '10px';
+            particle.style.color = '#68686E';
+          }
+          document.body.appendChild(particle);
+
+          const driftX = (i - 1) * 24 + (Math.random() - 0.5) * 14;
+          const riseY = -(38 + Math.random() * 24);
+          const tilt = (Math.random() - 0.5) * 18;
+
+          if (typeof particle.animate === 'function') {
+            const anim = particle.animate(
+              [
+                { transform: 'translate(-50%, -50%) scale(0.7) rotate(0deg)', opacity: 0.95 },
+                { transform: 'translate(calc(-50% + ' + driftX + 'px), calc(-50% + ' + riseY + 'px)) scale(1.05) rotate(' + tilt + 'deg)', opacity: 0 }
+              ],
+              {
+                duration: 620 + Math.random() * 140,
+                easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                fill: 'forwards'
+              }
+            );
+            anim.onfinish = function () {
+              particle.remove();
+            };
+          } else {
+            particle.remove();
+          }
+        }
+      }
+
+      respectBtn.addEventListener('click', function (e) {
+        respectValue += 1;
+        tapStreak += 1;
+        respectCounter.textContent = String(respectValue);
+        writeStorage(STORAGE_KEYS.respect, String(respectValue));
+
+        if (tapStreak === 1) {
+          respectHint.textContent = 'Респект засчитан, спасибо!';
+        } else if (tapStreak >= 5) {
+          respectHint.textContent = 'Двойной заряд респекта (' + tapStreak + 'x)';
+        }
+
+        respectBtn.classList.remove('is-bouncing');
+        void respectBtn.offsetWidth;
+        respectBtn.classList.add('is-bouncing');
+
+        clearTimeout(bounceTimer);
+        bounceTimer = setTimeout(function () {
+          respectBtn.classList.remove('is-bouncing');
+        }, 300);
+
+        spawnPlusOneParticles(e.clientX, e.clientY);
+      });
+    })();
+  </script>
+</body>
+</html>
